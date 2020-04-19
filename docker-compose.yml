@@ -3,7 +3,7 @@ version: '3.3'
 services:
   server:
     build: .
-    command: http-server ./html
+    restart: always
     volumes:
       - ./html:/vimwiki/html
     ports:
