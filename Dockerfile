@@ -1,4 +1,5 @@
 FROM node:dubnium
 WORKDIR /vimwiki
 RUN yarn global add http-server
-CMD http-server ./html -c-1
+EXPOSE 3000
+CMD http-server ./html -c-1 -p 3000 --username mormesher --password "$(cat /run/secrets/password)"

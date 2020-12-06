@@ -4,7 +4,23 @@ services:
   server:
     build: .
     restart: always
+    networks:
+      - traefik
     volumes:
       - ./html:/vimwiki/html
-    ports:
-      - "3002:8080"
+    secrets:
+      - password
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_default
+      - traefik.http.routers.wiki.rule=Host(`wiki.markormesher.co.uk`, `www.wiki.markormesher.co.uk`)
+      - traefik.http.routers.wiki.tls.certresolver=letsencrypt
+
+secrets:
+  password:
+    file: ./secrets/password
+
+networks:
+  traefik:
+    external:
+      name: traefik_default
